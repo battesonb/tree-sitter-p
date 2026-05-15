@@ -1,0 +1,42 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "p",
+      "camelcase": "P",
+      "title": "P",
+      "scope": "source.p",
+      "file-types": [
+        "p"
+      ],
+      "injection-regex": "^p$",
+      "class-name": "TreeSitterP"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "P is a state machine based programming language for formally modeling and specifying complex distributed systems.",
+    "authors": [
+      {
+        "name": "Byron Batteson",
+        "email": "byronbatteson@gmail.com",
+        "url": "https://github.com/battesonb"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/battesonb/tree-sitter-p",
+      "funding": ""
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "java": false,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
