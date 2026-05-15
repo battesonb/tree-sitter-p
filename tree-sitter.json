@@ -9,6 +9,7 @@
       "file-types": [
         "p"
       ],
+      "highlights": "queries/highlights.scm",
       "injection-regex": "^p$",
       "class-name": "TreeSitterP"
     }
@@ -25,8 +26,7 @@
       }
     ],
     "links": {
-      "repository": "https://github.com/battesonb/tree-sitter-p",
-      "funding": ""
+      "repository": "https://github.com/battesonb/tree-sitter-p"
     }
   },
   "bindings": {
