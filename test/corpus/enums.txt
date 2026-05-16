@@ -1,0 +1,29 @@
+==============================
+Simple enum
+==============================
+
+enum Color { Red, Green, Blue }
+
+------------------------------
+
+(program
+  (top_decl (enum_type_def_decl name: (identifier)
+    (enum_elem_list
+      (enum_elem name: (identifier))
+      (enum_elem name: (identifier))
+      (enum_elem name: (identifier))))))
+
+==============================
+Numbered enum
+==============================
+
+enum Status { Ok = 0, Err = 1 }
+
+------------------------------
+
+(program
+  (top_decl (enum_type_def_decl name: (identifier)
+    (numbered_enum_elem_list
+      (numbered_enum_elem name: (identifier) value: (int_literal))
+      (numbered_enum_elem name: (identifier) value: (int_literal))))))
+

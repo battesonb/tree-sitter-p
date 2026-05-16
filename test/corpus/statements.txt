@@ -1,0 +1,563 @@
+==============================
+Compound statement
+==============================
+
+fun F() {
+  {
+    return;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (compound_stmt
+        (statement (return_stmt)))))))))
+
+==============================
+Assert without message
+==============================
+
+fun F() {
+  assert x > 0;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assert_stmt
+        assertion: (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (int_literal))))))))))))
+
+==============================
+Assert with message
+==============================
+
+fun F() {
+  assert x > 0, "x must be positive";
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assert_stmt
+        assertion: (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (int_literal)))))
+        message: (expr (string_expr (formatted_string (string_literal)))))))))))
+
+==============================
+Assume statement
+==============================
+
+fun F() {
+  assume y >= 0;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assume_stmt
+        assumption: (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (int_literal))))))))))))
+
+==============================
+Print statement
+==============================
+
+fun F() {
+  print "hello";
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (print_stmt
+        message: (expr (string_expr (formatted_string (string_literal)))))))))))
+
+==============================
+Return with value
+==============================
+
+fun F() : int {
+  return 42;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (primitive_expr (int_literal))))))))))
+
+==============================
+Return without value
+==============================
+
+fun F() {
+  return;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (return_stmt)))))))
+
+==============================
+Assignment to variable
+==============================
+
+fun F() {
+  x = 1;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (primitive_expr (int_literal)))))))))))
+
+==============================
+Assignment to map index
+==============================
+
+fun F() {
+  m[k] = v;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (map_or_seq_lvalue
+          (lvalue (var_lvalue name: (identifier)))
+          (expr (primitive_expr (identifier)))))
+        (rvalue (expr (primitive_expr (identifier)))))))))))
+
+==============================
+Assignment to named tuple field
+==============================
+
+fun F() {
+  p.x = 5;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (named_tuple_lvalue
+          (lvalue (var_lvalue name: (identifier)))
+          field: (identifier)))
+        (rvalue (expr (primitive_expr (int_literal)))))))))))
+
+==============================
+Assignment to tuple index
+==============================
+
+fun F() {
+  t.0 = 1;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (tuple_lvalue
+          (lvalue (var_lvalue name: (identifier)))
+          field: (int_literal)))
+        (rvalue (expr (primitive_expr (int_literal)))))))))))
+
+==============================
+Map insert statement
+==============================
+
+fun F() {
+  m += (k, v);
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (insert_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (expr (primitive_expr (identifier)))
+        (rvalue (expr (primitive_expr (identifier)))))))))))
+
+==============================
+Sequence add statement
+==============================
+
+fun F() {
+  s += (elem);
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (add_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (primitive_expr (identifier)))))))))))
+
+==============================
+Remove statement
+==============================
+
+fun F() {
+  m -= k;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (remove_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (expr (primitive_expr (identifier))))))))))
+
+==============================
+While statement
+==============================
+
+fun F() {
+  while (x > 0) {
+    x = x;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (while_stmt
+        (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (int_literal)))))
+        (statement (compound_stmt
+          (statement (assign_stmt
+            (lvalue (var_lvalue name: (identifier)))
+            (rvalue (expr (primitive_expr (identifier)))))))))))))))
+
+==============================
+If without else
+==============================
+
+fun F() {
+  if (flag) {
+    return;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (if_stmt
+        (expr (primitive_expr (identifier)))
+        then_branch: (statement (compound_stmt
+          (statement (return_stmt)))))))))))
+
+==============================
+If with else
+==============================
+
+fun F() {
+  if (flag) {
+    return;
+  } else {
+    return;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (if_stmt
+        (expr (primitive_expr (identifier)))
+        then_branch: (statement (compound_stmt (statement (return_stmt))))
+        else_branch: (statement (compound_stmt (statement (return_stmt)))))))))))
+
+==============================
+Dangling else binds to inner if
+==============================
+
+fun F() {
+  if (a) if (b) return; else return;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (if_stmt
+        (expr (primitive_expr (identifier)))
+        then_branch: (statement (if_stmt
+          (expr (primitive_expr (identifier)))
+          then_branch: (statement (return_stmt))
+          else_branch: (statement (return_stmt)))))))))))
+
+==============================
+Foreach statement
+==============================
+
+fun F() {
+  foreach (x in col) {
+    return;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (foreach_stmt
+        item: (identifier)
+        collection: (expr (primitive_expr (identifier)))
+        (statement (compound_stmt (statement (return_stmt)))))))))))
+
+==============================
+New statement
+==============================
+
+fun F() {
+  new MyMachine(payload);
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (ctor_stmt
+        (identifier)
+        (rvalue_list (rvalue (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Function call statement
+==============================
+
+fun F() {
+  DoWork(x, y);
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (fun_call_stmt
+        fun: (identifier)
+        (rvalue_list
+          (rvalue (expr (primitive_expr (identifier))))
+          (rvalue (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Raise statement
+==============================
+
+fun F() {
+  raise eData, payload;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (raise_stmt
+        (expr (primitive_expr (identifier)))
+        (rvalue_list (rvalue (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Send statement
+==============================
+
+fun F() {
+  send target, eData, payload;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (send_stmt
+        machine: (expr (primitive_expr (identifier)))
+        event: (expr (primitive_expr (identifier)))
+        (rvalue_list (rvalue (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Announce statement
+==============================
+
+fun F() {
+  announce eEvent, data;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (announce_stmt
+        (expr (primitive_expr (identifier)))
+        (rvalue_list (rvalue (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Goto statement
+==============================
+
+machine M {
+  state S {
+    entry {
+      goto Next;
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_entry
+          (anon_event_handler
+            (function_body
+              (statement (goto_stmt (state_name state: (identifier))))))))))))))
+
+==============================
+Receive statement
+==============================
+
+machine M {
+  state S {
+    entry {
+      receive {
+        case eData: { return; }
+        case eErr: { return; }
+      }
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_entry
+          (anon_event_handler
+            (function_body
+              (statement (receive_stmt
+                (recv_case
+                  (event_list (event_id (identifier)))
+                  (anon_event_handler (function_body (statement (return_stmt)))))
+                (recv_case
+                  (event_list (event_id (identifier)))
+                  (anon_event_handler (function_body (statement (return_stmt)))))))))))))))))
+
+==============================
+Empty statement
+==============================
+
+fun F() {
+  ;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (no_stmt)))))))
+
+==============================
+Break and continue
+==============================
+
+fun F() {
+  while (true) {
+    break;
+    continue;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (while_stmt
+        (expr (primitive_expr (bool_literal)))
+        (statement (compound_stmt
+          (statement (break_stmt))
+          (statement (continue_stmt)))))))))))
+

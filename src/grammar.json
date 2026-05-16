@@ -1519,6 +1519,14 @@
         "name": "proof_item"
       }
     },
+    "goals_all": {
+      "type": "STRING",
+      "value": "*"
+    },
+    "goals_default": {
+      "type": "STRING",
+      "value": "default"
+    },
     "proof_item": {
       "type": "SEQ",
       "members": [
@@ -1555,20 +1563,12 @@
               ]
             },
             {
-              "type": "FIELD",
-              "name": "goals_all",
-              "content": {
-                "type": "STRING",
-                "value": "*"
-              }
+              "type": "SYMBOL",
+              "name": "goals_all"
             },
             {
-              "type": "FIELD",
-              "name": "goals_default",
-              "content": {
-                "type": "STRING",
-                "value": "default"
-              }
+              "type": "SYMBOL",
+              "name": "goals_default"
             }
           ]
         },
@@ -1691,6 +1691,14 @@
         }
       ]
     },
+    "temperature_hot": {
+      "type": "STRING",
+      "value": "hot"
+    },
+    "temperature_cold": {
+      "type": "STRING",
+      "value": "cold"
+    },
     "state_decl": {
       "type": "SEQ",
       "members": [
@@ -1716,12 +1724,12 @@
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": "hot"
+                    "type": "SYMBOL",
+                    "name": "temperature_hot"
                   },
                   {
-                    "type": "STRING",
-                    "value": "cold"
+                    "type": "SYMBOL",
+                    "name": "temperature_cold"
                   }
                 ]
               }

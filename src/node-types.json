@@ -1002,6 +1002,16 @@
     }
   },
   {
+    "type": "goals_all",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "goals_default",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "goto_stmt",
     "named": true,
     "fields": {},
@@ -2110,34 +2120,21 @@
   {
     "type": "proof_item",
     "named": true,
-    "fields": {
-      "goals_all": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "*",
-            "named": false
-          }
-        ]
-      },
-      "goals_default": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "default",
-            "named": false
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "expr",
+          "named": true
+        },
+        {
+          "type": "goals_all",
+          "named": true
+        },
+        {
+          "type": "goals_default",
           "named": true
         }
       ]
@@ -2738,12 +2735,12 @@
         "required": false,
         "types": [
           {
-            "type": "cold",
-            "named": false
+            "type": "temperature_cold",
+            "named": true
           },
           {
-            "type": "hot",
-            "named": false
+            "type": "temperature_hot",
+            "named": true
           }
         ]
       }
@@ -3579,10 +3576,6 @@
     "named": false
   },
   {
-    "type": "cold",
-    "named": false
-  },
-  {
     "type": "compose",
     "named": false
   },
@@ -3684,10 +3677,6 @@
   },
   {
     "type": "hidei",
-    "named": false
-  },
-  {
-    "type": "hot",
     "named": false
   },
   {
@@ -3874,6 +3863,14 @@
   {
     "type": "targets",
     "named": false
+  },
+  {
+    "type": "temperature_cold",
+    "named": true
+  },
+  {
+    "type": "temperature_hot",
+    "named": true
   },
   {
     "type": "test",

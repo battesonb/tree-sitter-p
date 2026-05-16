@@ -1,0 +1,87 @@
+==============================
+Primitive types
+==============================
+
+type T1 = bool;
+type T2 = int;
+type T3 = float;
+type T4 = string;
+type T5 = event;
+type T6 = machine;
+type T7 = data;
+type T8 = any;
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type))))
+  (top_decl (type_def_decl name: (identifier) (type (primitive_type)))))
+
+==============================
+Set type
+==============================
+
+type EvSet = set[event];
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier) (type (set_type (type (primitive_type)))))))
+
+==============================
+Map type
+==============================
+
+type Table = map[int, string];
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier)
+    (type (map_type key_type: (type (primitive_type)) value_type: (type (primitive_type)))))))
+
+==============================
+Tuple type
+==============================
+
+type Pair = (int, bool);
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier)
+    (type (tuple_type (type (primitive_type)) (type (primitive_type)))))))
+
+==============================
+Named tuple type
+==============================
+
+type Point = (x: int, y: int);
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier)
+    (type (named_tuple_type
+      (iden_type_list
+        (iden_type name: (identifier) (type (primitive_type)))
+        (iden_type name: (identifier) (type (primitive_type)))))))))
+
+==============================
+Nested map type
+==============================
+
+type NestedMap = map[int, seq[bool]];
+
+------------------------------
+
+(program
+  (top_decl (type_def_decl name: (identifier)
+    (type (map_type key_type: (type (primitive_type)) value_type: (type (seq_type (type (primitive_type)))))))))
+

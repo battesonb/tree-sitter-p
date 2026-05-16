@@ -1,0 +1,58 @@
+==============================
+Safety test declaration
+==============================
+
+test SafetyTest [main = Client] : { Client, Server };
+
+------------------------------
+
+(program
+  (top_decl (test_decl (safety_test_decl
+    test_name: (identifier)
+    main_machine: (identifier)
+    (mod_expr (primitive_module_expr
+      (bind_expr m_name: (identifier))
+      (bind_expr m_name: (identifier))))))))
+
+==============================
+Refinement test declaration
+==============================
+
+test RefinTest [main = Client] : { Client } refines { Server };
+
+------------------------------
+
+(program
+  (top_decl (test_decl (refinement_test_decl
+    test_name: (identifier)
+    main_machine: (identifier)
+    (mod_expr (primitive_module_expr (bind_expr m_name: (identifier))))
+    (mod_expr (primitive_module_expr (bind_expr m_name: (identifier))))))))
+
+==============================
+Implementation declaration without main
+==============================
+
+implementation Impl : { Client };
+
+------------------------------
+
+(program
+  (top_decl (implementation_decl
+    impl_name: (identifier)
+    (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))
+
+==============================
+Implementation declaration with main
+==============================
+
+implementation Impl [main = Client] : { Client };
+
+------------------------------
+
+(program
+  (top_decl (implementation_decl
+    impl_name: (identifier)
+    main_machine: (identifier)
+    (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))
+

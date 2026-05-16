@@ -1,0 +1,65 @@
+==============================
+Event without payload
+==============================
+
+event eInit;
+
+------------------------------
+
+(program
+  (top_decl (event_decl name: (identifier))))
+
+==============================
+Event with payload type
+==============================
+
+event eData : int;
+
+------------------------------
+
+(program
+  (top_decl (event_decl name: (identifier) (type (primitive_type)))))
+
+==============================
+Event with named tuple payload
+==============================
+
+event eRequest : (id: int, msg: string);
+
+------------------------------
+
+(program
+  (top_decl (event_decl name: (identifier)
+    (type (named_tuple_type
+      (iden_type_list
+        (iden_type name: (identifier) (type (primitive_type)))
+        (iden_type name: (identifier) (type (primitive_type)))))))))
+
+==============================
+Event set declaration
+==============================
+
+eventset MyEvents = { eInit, eData };
+
+------------------------------
+
+(program
+  (top_decl (event_set_decl name: (identifier)
+    (event_set_literal
+      (non_default_event (identifier))
+      (non_default_event (identifier))))))
+
+==============================
+Event set with halt
+==============================
+
+eventset AllEvents = { halt, eInit };
+
+------------------------------
+
+(program
+  (top_decl (event_set_decl name: (identifier)
+    (event_set_literal
+      (non_default_event)
+      (non_default_event (identifier))))))
+

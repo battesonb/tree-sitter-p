@@ -1,0 +1,98 @@
+==============================
+Invariant declaration
+==============================
+
+invariant NonNeg : x >= 0;
+
+------------------------------
+
+(program
+  (top_decl (invariant_decl
+    name: (identifier)
+    body: (expr (bin_expr
+      lhs: (expr (primitive_expr (identifier)))
+      rhs: (expr (primitive_expr (int_literal))))))))
+
+==============================
+Axiom declaration
+==============================
+
+axiom x > 0;
+
+------------------------------
+
+(program
+  (top_decl (axiom_decl
+    body: (expr (bin_expr
+      lhs: (expr (primitive_expr (identifier)))
+      rhs: (expr (primitive_expr (int_literal))))))))
+
+==============================
+Lemma group
+==============================
+
+Lemma MyLemma {
+  invariant Pos : x > 0;
+}
+
+------------------------------
+
+(program
+  (top_decl (invariant_group_decl
+    name: (identifier)
+    (invariant_decl
+      name: (identifier)
+      body: (expr (bin_expr
+        lhs: (expr (primitive_expr (identifier)))
+        rhs: (expr (primitive_expr (int_literal)))))))))
+
+==============================
+Empty proof block
+==============================
+
+Proof { }
+
+------------------------------
+
+(program
+  (top_decl (proof_block_decl)))
+
+==============================
+Proof block with name
+==============================
+
+Proof MyProof { }
+
+------------------------------
+
+(program
+  (top_decl (proof_block_decl name: (identifier))))
+
+==============================
+Proof item with prove all
+==============================
+
+Proof {
+  prove *;
+}
+
+------------------------------
+
+(program
+  (top_decl (proof_block_decl
+    (proof_body
+      (proof_item (goals_all))))))
+
+==============================
+Init condition
+==============================
+
+init-condition x == 0;
+
+------------------------------
+
+(program
+  (top_decl (assume_on_start_decl
+    body: (expr (bin_expr
+      lhs: (expr (primitive_expr (identifier)))
+      rhs: (expr (primitive_expr (int_literal))))))))

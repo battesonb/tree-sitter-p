@@ -1,0 +1,273 @@
+==============================
+Start state
+==============================
+
+machine M {
+  start state Init {
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)))))))
+
+==============================
+Hot state
+==============================
+
+machine M {
+  hot state Waiting {
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        temperature: (temperature_hot)
+        name: (identifier)))))))
+
+==============================
+Start hot state
+==============================
+
+machine M {
+  start hot state Active {
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        temperature: (temperature_hot)
+        name: (identifier)))))))
+
+==============================
+State with defer and ignore
+==============================
+
+machine M {
+  state S {
+    defer eData;
+    ignore eNoise, halt;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_defer
+          (non_default_event_list (non_default_event (identifier)))))
+        (state_body_item (state_ignore
+          (non_default_event_list
+            (non_default_event (identifier))
+            (non_default_event))))))))))
+
+==============================
+State with entry and exit by name
+==============================
+
+machine M {
+  state S {
+    entry OnEntry;
+    exit OnExit;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_entry fun_name: (identifier)))
+        (state_body_item (state_exit fun_name: (identifier)))))))))
+
+==============================
+State with anonymous entry handler
+==============================
+
+machine M {
+  state S {
+    entry (e: eData) {
+      return;
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_entry
+          (anon_event_handler
+            (fun_param name: (identifier) (type (named_type name: (identifier))))
+            (function_body
+              (statement (return_stmt))))))))))))
+
+==============================
+State with on-do action by name
+==============================
+
+machine M {
+  state S {
+    on eData do HandleData;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_do_action
+          (event_list (event_id (identifier)))
+          fun_name: (identifier)))))))))
+
+==============================
+State with on-do anonymous handler
+==============================
+
+machine M {
+  state S {
+    on eData do {
+      return;
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_do_action
+          (event_list (event_id (identifier)))
+          (anon_event_handler
+            (function_body
+              (statement (return_stmt))))))))))))
+
+==============================
+State with goto (semicolon only)
+==============================
+
+machine M {
+  state S {
+    on eGo goto Next;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_goto_state
+          (event_list (event_id (identifier)))
+          (state_name state: (identifier))))))))))
+
+==============================
+State with goto with anonymous handler
+==============================
+
+machine M {
+  state S {
+    on eGo goto Next with {
+      return;
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_goto_state
+          (event_list (event_id (identifier)))
+          (state_name state: (identifier))
+          (anon_event_handler (function_body (statement (return_stmt))))))))))))
+
+==============================
+State with goto with named handler
+==============================
+
+machine M {
+  state S {
+    on eGo goto Next with OnGo;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_goto_state
+          (event_list (event_id (identifier)))
+          (state_name state: (identifier))
+          fun_name: (identifier)))))))))
+
+==============================
+On multiple events
+==============================
+
+machine M {
+  state S {
+    on eA, eB, eC do Handler;
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (on_event_do_action
+          (event_list
+            (event_id (identifier))
+            (event_id (identifier))
+            (event_id (identifier)))
+          fun_name: (identifier)))))))))
+

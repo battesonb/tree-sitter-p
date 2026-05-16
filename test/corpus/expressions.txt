@@ -1,0 +1,648 @@
+==============================
+Integer literal
+==============================
+
+fun F() : int { return 42; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt (expr (primitive_expr (int_literal))))))))))
+
+==============================
+Boolean literals
+==============================
+
+fun F() {
+  x = true;
+  y = false;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (primitive_expr (bool_literal))))))
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (primitive_expr (bool_literal)))))))))))
+
+==============================
+Null literal
+==============================
+
+fun F() {
+  x = null;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (primitive_expr (null_literal)))))))))))
+
+==============================
+Float literal (decimal)
+==============================
+
+fun F() : float { return 3.14; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt (expr (primitive_expr (float_literal (int_literal) (int_literal)))))))))))
+
+==============================
+Float built-in constructor
+==============================
+
+fun F() : float { return float(3, 14); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (primitive_expr (float_literal
+          base: (int_literal)
+          exp: (int_literal)))))))))))
+
+==============================
+This expression
+==============================
+
+fun F() {
+  send this, eData;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (send_stmt
+        machine: (expr (primitive_expr))
+        event: (expr (primitive_expr (identifier))))))))))
+
+==============================
+Dollar expressions
+==============================
+
+machine M {
+  state S {
+    entry (e: eData) {
+      x = $;
+    }
+  }
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (state_decl
+        name: (identifier)
+        (state_body_item (state_entry
+          (anon_event_handler
+            (fun_param name: (identifier) (type (named_type name: (identifier))))
+            (function_body
+              (statement (assign_stmt
+                (lvalue (var_lvalue name: (identifier)))
+                (rvalue (expr (primitive_expr)))))))))))))))
+
+==============================
+Arithmetic operators
+==============================
+
+fun F() : int { return a + b * c - d / e % f; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (bin_expr
+            lhs: (expr (primitive_expr (identifier)))
+            rhs: (expr (bin_expr
+              lhs: (expr (primitive_expr (identifier)))
+              rhs: (expr (primitive_expr (identifier)))))))
+          rhs: (expr (bin_expr
+            lhs: (expr (bin_expr
+              lhs: (expr (primitive_expr (identifier)))
+              rhs: (expr (primitive_expr (identifier)))))
+            rhs: (expr (primitive_expr (identifier))))))))))))))
+
+==============================
+Comparison operators
+==============================
+
+fun F() : bool { return a == b; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Logical operators
+==============================
+
+fun F() : bool { return a && b || c; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (bin_expr
+            lhs: (expr (primitive_expr (identifier)))
+            rhs: (expr (primitive_expr (identifier)))))
+          rhs: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Implication operator
+==============================
+
+fun F() : bool { return a ==> b; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Biconditional operator
+==============================
+
+fun F() : bool { return a <==> b; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Unary negation
+==============================
+
+fun F() : int { return -x; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (unary_expr
+          (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Unary logical not
+==============================
+
+fun F() : bool { return !flag; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (unary_expr
+          (expr (primitive_expr (identifier))))))))))))
+
+==============================
+In operator
+==============================
+
+fun F() : bool { return k in m; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (bin_expr
+          lhs: (expr (primitive_expr (identifier)))
+          rhs: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Cast expression (as)
+==============================
+
+fun F() {
+  x = e as int;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (cast_expr
+          (expr (primitive_expr (identifier)))
+          (type (primitive_type))))))))))))
+
+==============================
+Cast expression (to)
+==============================
+
+fun F() {
+  x = e to MyType;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (cast_expr
+          (expr (primitive_expr (identifier)))
+          (type (named_type name: (identifier)))))))))))))
+
+==============================
+Is expression
+==============================
+
+fun F() : bool { return m is Client; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (test_expr
+          instance: (expr (primitive_expr (identifier)))
+          kind: (identifier))))))))))
+
+==============================
+New expression
+==============================
+
+fun F() : machine { return new Client(data); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (ctor_expr
+          interface_name: (identifier)
+          (rvalue_list (rvalue (expr (primitive_expr (identifier))))))))))))))
+
+==============================
+Function call expression
+==============================
+
+fun F() : int { return Compute(x, y); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (fun_call_expr
+          fun: (identifier)
+          (rvalue_list
+            (rvalue (expr (primitive_expr (identifier))))
+            (rvalue (expr (primitive_expr (identifier))))))))))))))
+
+==============================
+Sizeof expression
+==============================
+
+fun F() : int { return sizeof(col); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (keyword_expr
+          (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Keys expression
+==============================
+
+fun F() { x = keys(m); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (keyword_expr
+          (expr (primitive_expr (identifier)))))))))))))
+
+==============================
+Default expression
+==============================
+
+fun F() : int { return default(int); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (keyword_expr (type (primitive_type)))))))))))
+
+==============================
+Choose expression with argument
+==============================
+
+fun F() { x = choose(col); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (choose_expr
+          (expr (primitive_expr (identifier)))))))))))))
+
+==============================
+Choose expression without argument
+==============================
+
+fun F() { x = choose(); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (choose_expr))))))))))
+
+==============================
+Parenthesised expression
+==============================
+
+fun F() : int { return (1 + 2); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (paren_expr
+          (expr (bin_expr
+            lhs: (expr (primitive_expr (int_literal)))
+            rhs: (expr (primitive_expr (int_literal))))))))))))))
+
+==============================
+Named tuple access
+==============================
+
+fun F() : int { return p.x; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (named_tuple_access_expr
+          (expr (primitive_expr (identifier)))
+          field: (identifier))))))))))
+
+==============================
+Positional tuple access
+==============================
+
+fun F() : int { return t.0; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (tuple_access_expr
+          (expr (primitive_expr (identifier)))
+          field: (int_literal))))))))))
+
+==============================
+Sequence/map index access
+==============================
+
+fun F() : int { return m[k]; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (seq_access_expr
+          seq: (expr (primitive_expr (identifier)))
+          index: (expr (primitive_expr (identifier))))))))))))
+
+==============================
+Unnamed tuple expression
+==============================
+
+fun F() { x = (1, 2); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (unnamed_tuple_expr
+          (unnamed_tuple_body
+            (rvalue (expr (primitive_expr (int_literal))))
+            (rvalue (expr (primitive_expr (int_literal)))))))))))))))
+
+==============================
+Named tuple expression
+==============================
+
+fun F() { p = (x = 1, y = 2); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (assign_stmt
+        (lvalue (var_lvalue name: (identifier)))
+        (rvalue (expr (named_tuple_expr
+          (named_tuple_body
+            (identifier)
+            (rvalue (expr (primitive_expr (int_literal))))
+            (identifier)
+            (rvalue (expr (primitive_expr (int_literal)))))))))))))))
+
+==============================
+Forall quantifier
+==============================
+
+pure AllPos(s: seq[int]) : bool = forall (x: int) :: x > 0;
+
+------------------------------
+
+(program
+  (top_decl (pure_decl
+    name: (identifier)
+    (fun_param_list (fun_param name: (identifier) (type (seq_type (type (primitive_type))))))
+    (type (primitive_type))
+    body: (expr (quant_expr
+      bound: (fun_param_list (fun_param name: (identifier) (type (primitive_type))))
+      body: (expr (bin_expr
+        lhs: (expr (primitive_expr (identifier)))
+        rhs: (expr (primitive_expr (int_literal))))))))))
+
+==============================
+Exists quantifier
+==============================
+
+pure HasNeg(s: seq[int]) : bool = exists (x: int) :: x < 0;
+
+------------------------------
+
+(program
+  (top_decl (pure_decl
+    name: (identifier)
+    (fun_param_list (fun_param name: (identifier) (type (seq_type (type (primitive_type))))))
+    (type (primitive_type))
+    body: (expr (quant_expr
+      bound: (fun_param_list (fun_param name: (identifier) (type (primitive_type))))
+      body: (expr (bin_expr
+        lhs: (expr (primitive_expr (identifier)))
+        rhs: (expr (primitive_expr (int_literal))))))))))
+
+==============================
+String expression
+==============================
+
+fun F() { print "hello world"; }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (print_stmt
+        message: (expr (string_expr (formatted_string (string_literal)))))))))))
+
+==============================
+Format expression
+==============================
+
+fun F() { print format("val={0}", x); }
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body
+      (statement (print_stmt
+        message: (expr (string_expr (formatted_string
+          (string_literal)
+          (rvalue_list (rvalue (expr (primitive_expr (identifier)))))))))))))))
+

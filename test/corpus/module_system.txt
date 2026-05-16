@@ -1,0 +1,133 @@
+==============================
+Named module with primitive binding
+==============================
+
+module MyMod = { Client, Server };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (primitive_module_expr
+      (bind_expr m_name: (identifier))
+      (bind_expr m_name: (identifier)))))))
+
+==============================
+Named module with interface binding
+==============================
+
+module MyMod = { Client -> IClient };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (primitive_module_expr
+      (bind_expr m_name: (identifier) i_name: (identifier)))))))
+
+==============================
+Named module reference
+==============================
+
+module Composed = MyMod;
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (named_module (identifier))))))
+
+==============================
+Compose module expression
+==============================
+
+module AB = compose { A }, { B };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (compose_module_expr
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier))))
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+
+==============================
+Union module expression
+==============================
+
+module AB = union { A }, { B };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (union_module_expr
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier))))
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+
+==============================
+Hide events module expression
+==============================
+
+module Hidden = hidee eInternal in { M };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (hide_events_module_expr
+      (non_default_event_list (non_default_event (identifier)))
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+
+==============================
+Hide interfaces module expression
+==============================
+
+module Hidden = hidei IInternal in { M };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (hide_interfaces_module_expr
+      (iden_list (identifier))
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+
+==============================
+Rename module expression
+==============================
+
+module Renamed = rename OldName to NewName in { M };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (rename_module_expr
+      old_name: (identifier)
+      new_name: (identifier)
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+
+==============================
+Main machine module expression
+==============================
+
+module WithMain = main M in { M };
+
+------------------------------
+
+(program
+  (top_decl (named_module_decl
+    name: (identifier)
+    (mod_expr (main_machine_module_expr
+      main_machine: (identifier)
+      (mod_expr (primitive_module_expr (bind_expr m_name: (identifier)))))))))
+

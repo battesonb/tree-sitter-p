@@ -283,13 +283,15 @@ export default grammar({
 
     proof_body: ($) => repeat1($.proof_item),
 
+    goals_all: (_) => "*",
+    goals_default: (_) => "default",
     proof_item: ($) =>
       seq(
         "prove",
         choice(
           seq($.expr, repeat(seq(",", $.expr))),
-          field("goals_all", "*"),
-          field("goals_default", "default")
+          $.goals_all,
+          $.goals_default
         ),
         optional(
           seq(
@@ -314,10 +316,15 @@ export default grammar({
     // States
     // -------------------------------------------------------------------------
 
+    temperature_hot: (_) => "hot",
+    temperature_cold: (_) => "cold",
     state_decl: ($) =>
       seq(
         optional("start"),
-        optional(field("temperature", choice("hot", "cold"))),
+        optional(field("temperature", choice(
+          $.temperature_hot,
+          $.temperature_cold,
+        ))),
         "state",
         field("name", $.identifier),
         "{",

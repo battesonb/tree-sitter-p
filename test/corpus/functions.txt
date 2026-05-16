@@ -1,0 +1,115 @@
+==============================
+Simple function with body
+==============================
+
+fun Add(x: int, y: int) : int {
+  return x;
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (fun_param_list
+      (fun_param name: (identifier) (type (primitive_type)))
+      (fun_param name: (identifier) (type (primitive_type))))
+    (type (primitive_type))
+    (function_body
+      (statement (return_stmt
+        (expr (primitive_expr (identifier))))))))))
+
+==============================
+Function with no params and no return type
+==============================
+
+fun Init() {
+}
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (p_fun_decl
+    name: (identifier)
+    (function_body)))))
+
+==============================
+Foreign function declaration
+==============================
+
+fun NativeOp(x: int) : bool;
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (foreign_fun_decl
+    name: (identifier)
+    (fun_param_list
+      (fun_param name: (identifier) (type (primitive_type))))
+    (type (primitive_type))))))
+
+==============================
+Foreign function with creates
+==============================
+
+fun Spawn() creates MyMachine;
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (foreign_fun_decl
+    name: (identifier)
+    interface: (identifier)))))
+
+==============================
+Foreign function with requires
+==============================
+
+fun SafeDiv(x: int, y: int)
+  requires y != 0;
+
+------------------------------
+
+(program
+  (top_decl (fun_decl (foreign_fun_decl
+    name: (identifier)
+    (fun_param_list
+      (fun_param name: (identifier) (type (primitive_type)))
+      (fun_param name: (identifier) (type (primitive_type))))
+    (expr (bin_expr
+      lhs: (expr (primitive_expr (identifier)))
+      rhs: (expr (primitive_expr (int_literal)))))))))
+
+==============================
+Pure function declaration
+==============================
+
+pure Double(x: int) : int;
+
+------------------------------
+
+(program
+  (top_decl (pure_decl
+    name: (identifier)
+    (fun_param_list
+      (fun_param name: (identifier) (type (primitive_type))))
+    (type (primitive_type)))))
+
+==============================
+Pure function with body
+==============================
+
+pure IsZero(x: int) : bool = x == 0;
+
+------------------------------
+
+(program
+  (top_decl (pure_decl
+    name: (identifier)
+    (fun_param_list
+      (fun_param name: (identifier) (type (primitive_type))))
+    (type (primitive_type))
+    body: (expr (bin_expr
+      lhs: (expr (primitive_expr (identifier)))
+      rhs: (expr (primitive_expr (int_literal))))))))
+

@@ -1,0 +1,36 @@
+==============================
+Interface with no payload and no receives
+==============================
+
+interface IServer(int) receives ;
+
+------------------------------
+
+(program
+  (top_decl (interface_decl name: (identifier) (type (primitive_type)))))
+
+==============================
+Interface with payload and receives
+==============================
+
+interface IClient(string) receives eResp, eErr;
+
+------------------------------
+
+(program
+  (top_decl (interface_decl name: (identifier) (type (primitive_type))
+    (non_default_event_list
+      (non_default_event (identifier))
+      (non_default_event (identifier))))))
+
+==============================
+Interface with no payload
+==============================
+
+interface IEmpty() receives ;
+
+------------------------------
+
+(program
+  (top_decl (interface_decl name: (identifier))))
+

@@ -1,0 +1,88 @@
+==============================
+Minimal machine
+==============================
+
+machine MyMachine {
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body))))
+
+==============================
+Machine with receives and sends
+==============================
+
+machine Server
+  receives eReq;
+  sends eResp;
+{
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (receives_sends
+      (event_set_literal (non_default_event (identifier))))
+    (receives_sends
+      (event_set_literal (non_default_event (identifier))))
+    (machine_body))))
+
+==============================
+Machine with variable declarations
+==============================
+
+machine Counter {
+  var count : int;
+  var flag : bool;
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (var_decl (iden_list (identifier)) (type (primitive_type))))
+      (machine_entry (var_decl (iden_list (identifier)) (type (primitive_type))))))))
+
+==============================
+Machine with multiple vars in one decl
+==============================
+
+machine Multi {
+  var x, y : int;
+}
+
+------------------------------
+
+(program
+  (top_decl (impl_machine_decl
+    name: (identifier)
+    (machine_body
+      (machine_entry (var_decl
+        (iden_list (identifier) (identifier))
+        (type (primitive_type))))))))
+
+==============================
+Spec machine
+==============================
+
+spec Safety observes eStart, eStop {
+}
+
+------------------------------
+
+(program
+  (top_decl (spec_machine_decl
+    name: (identifier)
+    (event_set_literal
+      (non_default_event (identifier))
+      (non_default_event (identifier)))
+    (machine_body))))
+

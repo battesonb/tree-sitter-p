@@ -1,0 +1,39 @@
+==============================
+Line comment
+==============================
+
+// This is a comment
+event eInit;
+
+------------------------------
+
+(program
+  (line_comment)
+  (top_decl (event_decl name: (identifier))))
+
+==============================
+Block comment
+==============================
+
+/* This is a
+   block comment */
+event eInit;
+
+------------------------------
+
+(program
+  (block_comment)
+  (top_decl (event_decl name: (identifier))))
+
+==============================
+Inline comment
+==============================
+
+event eInit; // trailing comment
+
+------------------------------
+
+(program
+  (top_decl (event_decl name: (identifier)))
+  (line_comment))
+

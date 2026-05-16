@@ -1,0 +1,26 @@
+==============================
+Global param declaration
+==============================
+
+param maxRetries : int;
+
+------------------------------
+
+(program
+  (top_decl (global_param_decl
+    (iden_list (identifier))
+    (type (primitive_type)))))
+
+==============================
+Global param multiple names
+==============================
+
+param x, y : int;
+
+------------------------------
+
+(program
+  (top_decl (global_param_decl
+    (iden_list (identifier) (identifier))
+    (type (primitive_type)))))
+
