@@ -9,7 +9,7 @@
       "file-types": [
         "p"
       ],
-      "highlights": "queries/highlights.scm",
+      "highlights": "queries/neovim/highlights.scm",
       "injection-regex": "^p$",
       "class-name": "TreeSitterP"
     }
